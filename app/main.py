@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, WebSocket
+from fastapi import FastAPI, HTTPException, WebSocket, Depends
 from sqlalchemy.orm import Session
 from typing import List
 from .database import SessionLocal, engine, Base
