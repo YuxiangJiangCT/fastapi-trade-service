@@ -123,14 +123,14 @@ Get All Orders
 
 ### AWS EC2 Deployment
 1. **Setup AWS EC2**:
-   - Launch an EC2 instance (**Amazon Linux 2** or **Ubuntu**).
+   - Launch an EC2 instance (**Ubuntu**).
    - Install **Docker & Docker Compose**.
    - Clone this repository onto the instance.
    
 2. **GitHub Secrets**:
-   - `EC2_SSH_KEY`: Your **private SSH key**.
-   - `EC2_KNOWN_HOSTS`: The host key for your EC2 instance (**obtain via** `ssh-keyscan 3.22.81.199`).
+   - `EC2_SSH_KEY`: The **private SSH key**.
+   - `EC2_KNOWN_HOSTS`: The host key for the EC2 instance (**obtain via** `ssh-keyscan 3.22.81.199`).
 
 3. **Deployment**:
-   - On **every push to `main`**, GitHub Actions will **SSH into your EC2 instance**, pull changes, and restart the Docker containers.
+   - On **every push to `main`**, GitHub Actions will **SSH into the EC2 instance**, pull changes, and restart the Docker containers.
 
