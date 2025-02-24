@@ -40,18 +40,6 @@ class ConnectionManager:
             await connection.send_text(message)
             print(f"Broadcasted message to {connection.client}: {message}")
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    try:
-        await manager.connect(websocket)
-        print("WebSocket connection established.")
-        while True:
-            data = await websocket.receive_text()
-            print(f"Received message: {data}")
-            await manager.broadcast(f"Message from client: {data}")
-    except Exception as e:
-        print(f"WebSocket error: {e}")
-        manager.disconnect(websocket)
 
 manager = ConnectionManager()
 
@@ -79,4 +67,18 @@ def get_orders(db: Session = Depends(get_db)):
             data = await websocket.receive_text()
             await manager.broadcast(f"Message from client: {data}")
     except:
+        manager.disconnect(websocket)
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    try:
+        await manager.connect(websocket)
+        print("WebSocket connection established.")
+        while True:
+            data = await websocket.receive_text()
+            print(f"Received message: {data}")
+            await manager.broadcast(f"Message from client: {data}")
+    except Exception as e:
+        print(f"WebSocket error: {e}")
         manager.disconnect(websocket)
