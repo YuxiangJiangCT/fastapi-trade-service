@@ -11,28 +11,8 @@ A simple trade order management system built with **FastAPI**, **PostgreSQL**, *
 - **Docker Containerization**: Single `Dockerfile` plus `docker-compose.yml` for multi-container setup
 - **CI/CD**: GitHub Actions workflow to automatically test, build, and deploy to AWS EC2
 
----
 
-## Repository Structure
-fastapi-trade-service/
-│   README.md                 # This documentation file
-│   requirements.txt          # Python dependencies
-│   docker-compose.yml        # Docker Compose configuration
-│   Dockerfile                # Docker build file
-│
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml         # GitHub Actions CI/CD workflow
-│
-├── app/
-    ├── main.py               # FastAPI entry point (routes, logic)
-    ├── database.py           # Database connection setup
-    ├── models.py             # SQLAlchemy models
-    ├── schemas.py            # Pydantic schemas for request/response validation
-    └── init.py           # Empty file, marks app as a Python package
        
-
----
 
 ## 1. Getting Started
 
