@@ -11,7 +11,9 @@ app = FastAPI(
     version="1.0.0"
 )
 
+
 Base.metadata.create_all(bind=engine)
+
 
 def get_db():
     db = SessionLocal()
@@ -20,7 +22,6 @@ def get_db():
     finally:
         db.close()
 
-from typing import List
 
 class ConnectionManager:
     def __init__(self):
@@ -32,16 +33,17 @@ class ConnectionManager:
         print(f"New WebSocket connection accepted: {websocket.client}")
 
     def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
-        print(f"WebSocket disconnected: {websocket.client}")
+        if websocket in self.active_connections:
+            self.active_connections.remove(websocket)
+            print(f"WebSocket disconnected: {websocket.client}")
 
     async def broadcast(self, message: str):
         for connection in self.active_connections:
             await connection.send_text(message)
             print(f"Broadcasted message to {connection.client}: {message}")
 
-
 manager = ConnectionManager()
+
 
 @app.post("/orders", response_model=OrderOut)
 async def create_order(order: OrderCreate, db: Session = Depends(get_db)):
@@ -57,17 +59,11 @@ async def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     await manager.broadcast(f"New order created: {db_order.symbol}")
     return db_order
 
+
 @app.get("/orders", response_model=List[OrderOut])
 def get_orders(db: Session = Depends(get_db)):
     orders = db.query(Order).all()
     return orders
-
-
-
-            data = await websocket.receive_text()
-            await manager.broadcast(f"Message from client: {data}")
-    except:
-        manager.disconnect(websocket)
 
 
 @app.websocket("/ws")
