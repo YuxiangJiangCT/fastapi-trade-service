@@ -10,7 +10,6 @@ A simple trade order management system built with **FastAPI**, **PostgreSQL**, *
 - **Database**: PostgreSQL (or SQLite for local testing)
 - **Docker Containerization**: Single `Dockerfile` plus `docker-compose.yml` for multi-container setup
 - **CI/CD**: GitHub Actions workflow to automatically test, build, and deploy to AWS EC2
-- **(Optional) WebSocket**: Ready for future implementation
 
 ---
 
@@ -130,7 +129,7 @@ Get All Orders
    
 2. **GitHub Secrets**:
    - `EC2_SSH_KEY`: Your **private SSH key**.
-   - `EC2_KNOWN_HOSTS`: The host key for your EC2 instance (**obtain via** `ssh-keyscan <EC2-Public-IP>`).
+   - `EC2_KNOWN_HOSTS`: The host key for your EC2 instance (**obtain via** `ssh-keyscan 3.22.81.199`).
 
 3. **Deployment**:
    - On **every push to `main`**, GitHub Actions will **SSH into your EC2 instance**, pull changes, and restart the Docker containers.
