@@ -44,25 +44,25 @@ fastapi-trade-service/
    git clone https://github.com/YuxiangJiang2026/fastapi-trade-service.git
    cd fastapi-trade-service
 
-2. **Build and run the containers:
+2. **Build and run the containers**:
    ```bash
    docker-compose up --build
 
 
-3. **Access the API Documentation:
+3. **Access the API Documentation**:
    Open your browser and visit http://127.0.0.1:8000/docs to view the Swagger UI.
    Use the POST /orders endpoint to create orders and GET /orders to retrieve them.
 
 ## 2. Local Development (Without Docker)
-1. **Install dependencies:
+1. **Install dependencies**:
   	```bash
   	pip install -r requirements.txt
 
-2. **Run the FastAPI application:
+2. **Run the FastAPI application**:
 	```bash
 	uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
-3. **Access the docs:
+3. **Access the docs**:
    Visit http://127.0.0.1:8000/docs in your browser.
 
 
