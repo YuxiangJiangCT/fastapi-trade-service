@@ -1,4 +1,97 @@
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?logo=amazonaws)
+![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)
+
 # FastAPI Trade Service
+
+A trade order management REST API with full CI/CD pipeline — from local Docker development to automated AWS EC2 deployment.
+
+## Why This Project
+
+This project demonstrates production-grade backend engineering practices: containerized API development, automated testing, continuous deployment, and cloud infrastructure — the full lifecycle from `git push` to running in production.
+
+## Architecture
+
+```
+Developer → git push → GitHub Actions CI/CD
+                           ├── 1. Build & Test (pytest)
+                           ├── 2. Docker Build
+                           └── 3. SSH Deploy → AWS EC2
+                                                  └── Docker Compose
+                                                       ├── FastAPI (uvicorn)
+                                                       └── PostgreSQL
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/orders` | Create a new trade order |
+| `GET` | `/orders` | List all orders |
+| `GET` | `/docs` | Interactive Swagger UI |
+| `GET` | `/redoc` | ReDoc documentation |
+
+### Example: Create Order
+
+```bash
+curl -X POST http://localhost:8000/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "symbol": "AAPL",
+    "price": 178.50,
+    "quantity": 100,
+    "order_type": "buy"
+  }'
+```
+
+## Quick Start
+
+### With Docker (recommended)
+
+```bash
+git clone https://github.com/YuxiangJiangCT/fastapi-trade-service.git
+cd fastapi-trade-service
+docker-compose up --build
+# API available at http://localhost:8000/docs
+```
+
+### Without Docker
+
+```bash
+pip install -r requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+## CI/CD Pipeline
+
+The GitHub Actions workflow (`.github/workflows/ci-cd.yml`) runs on every push/PR to main:
+
+| Stage | What It Does |
+|-------|-------------|
+| **Build & Test** | Install deps → run `pytest` suite |
+| **Docker Build** | Build container image, verify it starts |
+| **Deploy** | SSH into EC2 → pull latest → `docker-compose up` |
+
+### AWS EC2 Setup
+
+Required GitHub Secrets:
+- `EC2_SSH_KEY` — Private SSH key for EC2 instance
+- `EC2_KNOWN_HOSTS` — SSH known hosts entry
+
+## Tech Stack
+
+| Component | Technology |
+|-----------|-----------|
+| Framework | FastAPI (Python) |
+| Database | PostgreSQL (prod) / SQLite (dev) |
+| Server | Uvicorn |
+| Container | Docker + Docker Compose |
+| CI/CD | GitHub Actions |
+| Cloud | AWS EC2 (Ubuntu) |
+| Docs | Auto-generated Swagger UI + ReDoc |# FastAPI Trade Service
 
 A simple trade order management system built with **FastAPI**, **PostgreSQL**, **Docker**, and **GitHub Actions** for CI/CD. It supports creating and retrieving orders via REST APIs and is deployed on **AWS EC2**.
 
